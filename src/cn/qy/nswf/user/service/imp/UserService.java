@@ -1,5 +1,6 @@
 package cn.qy.nswf.user.service.imp;
 
+import cn.qy.core.Utils.POIExcelUtil;
 import cn.qy.nswf.user.Entity.User;
 import cn.qy.nswf.user.dao.IUserDao;
 import cn.qy.nswf.user.dao.imp.UserDao;
@@ -7,7 +8,8 @@ import cn.qy.nswf.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
+import javax.servlet.ServletOutputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -43,5 +45,25 @@ public class UserService implements IUserService {
     @Override
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public void exportExcel(List<User> list, ServletOutputStream outputStream) throws IOException {
+        POIExcelUtil.export(list,outputStream,"UserList");
+    }
+
+    @Override
+    public void importExcel(File excel, String name) {
+        boolean is03Excel = name.matches("^.+\\/(?i)(xls)$");
+        try {
+            FileInputStream inputStream = new FileInputStream(excel);
+           List<User> list =  POIExcelUtil.importExcel(inputStream,is03Excel);
+            for (User user:list
+                 ) {
+                save(user);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

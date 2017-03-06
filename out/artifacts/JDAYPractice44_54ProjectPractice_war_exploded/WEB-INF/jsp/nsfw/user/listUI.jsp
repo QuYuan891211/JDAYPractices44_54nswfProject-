@@ -11,6 +11,13 @@
         $("input[name='selectedRow']").prop("checked",$("#selAll").prop("checked"));
 
     }
+    function doExportExcel() {
+        window.open("${basePath}nsfw/user_exportExcel.action");
+    }
+    function doImportExcel() {
+        document.forms[0].action = "${basePath}nsfw/user_importExcel.action";
+        document.forms[0].submit();
+    }
 </script>
 </head>
 <body class="rightBody">
@@ -27,7 +34,7 @@
                     <li style="float:right;">
                         <input type="button" value="新增" class="s_button" onclick="doAdd('user_addUI')"/>&nbsp;
                         <input type="button" value="删除" class="s_button" onclick="doDeleteAll('user_deleteSelected')"/>&nbsp;
-                        <input type="button" value="导出" class="s_button" onclick="doExportExcel()"/>&nbsp;
+                        <input type="button" value="导出" class="s_button" onclick="doExportExcel('')"/>&nbsp;
                     	<input name="userExcel" type="file"/>
                         <input type="button" value="导入" class="s_button" onclick="doImportExcel()"/>&nbsp;
 

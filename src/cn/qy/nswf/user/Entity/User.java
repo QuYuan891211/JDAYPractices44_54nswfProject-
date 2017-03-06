@@ -17,7 +17,8 @@ public class User implements Serializable{
     private boolean gender;
     private String state;
     private String mobile;
-
+    public static String USER_STATE_VALID = "1";
+    public static String USER_STATE_INVALID = "0";
     public User() {
     }
 

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="poi">
+    <CLASSES>
+      <root url="file://D:/CS/JavaWeb/WebLibs/poi" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/CS/JavaWeb/WebLibs/poi" recursive="false" />
+  </library>
+</component>
