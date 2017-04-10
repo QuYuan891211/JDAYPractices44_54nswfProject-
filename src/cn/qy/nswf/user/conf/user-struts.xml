@@ -4,7 +4,7 @@
 		"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	<package name="user-action" extends="struts-default">
+	<package name="user-action" extends="base-default">
 
 	<action name="user_*" class="cn.qy.nswf.user.action.UserAction" method="{1}">
 			<result name="{1}">/WEB-INF/jsp/nsfw/user/{1}.jsp</result>

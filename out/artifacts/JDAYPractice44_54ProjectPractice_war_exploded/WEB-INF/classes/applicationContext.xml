@@ -40,7 +40,7 @@
 
 		<property name="mappingLocations">
 			<list>
-				<value>classpath:cn/qy/nswf/*/Entity/*.hbm.xml</value>
+				<value>classpath:cn/qy/nswf/*/entity/*.hbm.xml</value>
 				<value>classpath:Test/Test/conf/*.hbm.xml</value>
 			</list>
 		</property>
@@ -70,4 +70,5 @@
 	</bean>
 	<!--<import resource="classpath:Test/Test/conf/test-spring.xml"></import>-->
 	<import resource="classpath:cn/qy/nswf/user/conf/user-spring.xml"></import>
+	<import resource="classpath:cn/qy/nswf/role/conf/role-spring.xml"></import>
 </beans>

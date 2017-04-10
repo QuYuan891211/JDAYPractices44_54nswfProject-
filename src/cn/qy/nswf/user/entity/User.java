@@ -1,4 +1,4 @@
-package cn.qy.nswf.user.Entity;
+package cn.qy.nswf.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;

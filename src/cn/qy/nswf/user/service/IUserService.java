@@ -1,6 +1,7 @@
 package cn.qy.nswf.user.service;
 
-import cn.qy.nswf.user.Entity.User;
+import cn.qy.core.exception.ServiceException;
+import cn.qy.nswf.user.entity.User;
 
 import javax.servlet.ServletOutputStream;
 import java.io.File;
@@ -16,7 +17,8 @@ public interface IUserService {
     void delete(Serializable id);
     void update(User user);
     User findById(Serializable id);
-    List<User> findAll();
+    List<User> findAll() throws ServiceException;
     void exportExcel(List<User> list, ServletOutputStream outputStream) throws IOException;
     void importExcel(File excel, String name);
+    List<User> findUsersByIdAndAccount(String id,String account);
 }

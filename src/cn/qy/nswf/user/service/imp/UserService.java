@@ -1,9 +1,9 @@
 package cn.qy.nswf.user.service.imp;
 
 import cn.qy.core.Utils.POIExcelUtil;
-import cn.qy.nswf.user.Entity.User;
+import cn.qy.core.exception.ServiceException;
+import cn.qy.nswf.user.entity.User;
 import cn.qy.nswf.user.dao.IUserDao;
-import cn.qy.nswf.user.dao.imp.UserDao;
 import cn.qy.nswf.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll() throws ServiceException {
+        try{
+
+        }catch (Exception e){
+            throw new ServiceException(e.getMessage());
+        }
+
         return userDao.findAll();
     }
 
@@ -65,5 +71,10 @@ public class UserService implements IUserService {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<User> findUsersByIdAndAccount(String id, String account) {
+        return userDao.findUsersByIdAndAccount(id,account);
     }
 }

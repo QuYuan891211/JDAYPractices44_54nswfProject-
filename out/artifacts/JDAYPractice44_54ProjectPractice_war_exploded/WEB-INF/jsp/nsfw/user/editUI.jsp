@@ -4,10 +4,48 @@
     <%@include file="/common/header.jsp"%>
     <script type="text/javascript" src="${basePath}js/datepicker/WdatePicker.js"></script>
     <title>用户管理</title>
-    
+    <script type="text/javascript">
+        var res = false;
+        function doValidate() {
+            var account = $("#account").val();
+            $.ajax({
+                type:"post",
+                url:"${basePath}nswf/user_doValidate.action",
+                data:{"user.account":account,"user.id":"${user.id}"},
+                async:false,
+                success:function (msg) {
+                    if("true"!=msg){
+                        alert("账号已经存在");
+                        $("#account").focus();
+                        res=false;
+                    }else {
+                        res = true;
+                    }
+                }
+            })
+        }
+        function doSubmit() {
+            var name = $("#name");
+            if(name.val() == ""){
+                alert("用户名不能为空");
+                name.focus();
+                return false;
+            }
+            var password = $("#password");
+            if(password.val() == ""){
+                alert("密码不能为空");
+                password.focus();
+                return false;
+            }
+            doValidate();
+            if(res){
+                document.forms[0].submit();
+            }
+        }
+    </script>
 </head>
 <body class="rightBody">
-<form id="form" name="form" action="" method="post" enctype="multipart/form-data">
+<form id="form" name="form" action="${basePath}nswf/user_edit.action" method="post" enctype="multipart/form-data">
     <div class="p_d_1">
         <div class="p_d_1_1">
             <div class="content_info">
@@ -21,23 +59,24 @@
         <tr>
             <td class="tdBg" width="200px">头像：</td>
             <td>
-                
+                <s:if test="%{user.headImg != null && user.headImg != ''}">
                     <img src="${basePath}upload/<s:property value='user.headImg'/>" width="100" height="100"/>
-                
+                    <s:hidden name="user.headImg"/>
+                </s:if>
                 <input type="file" name="headImg"/>
             </td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">用户名：</td>
-            <td><s:textfield name="user.name"/> </td>
+            <td><s:textfield id="name" name="user.name"/> </td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">帐号：</td>
-            <td><s:textfield name="user.account"/></td>
+            <td><s:textfield id="account" name="user.account" onblur="doValidate()"/></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">密码：</td>
-            <td><s:textfield name="user.password"/></td>
+            <td><s:textfield id="password" name="user.password"/></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">性别：</td>
@@ -70,7 +109,7 @@
     </table>
     <s:hidden name="user.id"></s:hidden>
     <div class="tc mt20">
-        <input type="submit" class="btnB2" value="保存" />
+        <input type="button" class="btnB2" value="保存" onclick="doSubmit()"/>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button"  onclick="javascript:history.go(-1)" class="btnB2" value="返回" />
     </div>

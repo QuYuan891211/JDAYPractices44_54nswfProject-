@@ -1,6 +1,6 @@
 package cn.qy.core.Utils;
 
-import cn.qy.nswf.user.Entity.User;
+import cn.qy.nswf.user.entity.User;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -8,7 +8,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
