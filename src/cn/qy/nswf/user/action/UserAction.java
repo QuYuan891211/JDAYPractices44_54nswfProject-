@@ -4,14 +4,18 @@ import cn.qy.core.Action.BaseAction;
 import cn.qy.core.exception.ActionException;
 import cn.qy.core.exception.ServiceException;
 import cn.qy.core.exception.SysException;
+import cn.qy.nswf.role.service.IRoleService;
 import cn.qy.nswf.user.entity.User;
+import cn.qy.nswf.user.entity.UserRole;
 import cn.qy.nswf.user.service.IUserService;
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.io.*;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +27,8 @@ import java.util.UUID;
 public class UserAction extends BaseAction{
     @Resource
     private IUserService userService;
+    @Resource
+    private IRoleService roleService;
     private List<User> userList;
     private User user;
     private File headImg;
@@ -34,20 +40,22 @@ public class UserAction extends BaseAction{
     private String headImgFileName;
     private String headImgContentType;
 
+
+
+    private String[] userRoleIds;
+
     public String TestUI(){
         return "TestUI";
     }
     //列表页面
-    public String listUI() throws SysException {
-        try {
-            userList = userService.findAll();
-        } catch (ServiceException e) {
-            throw new ActionException("Servi: "+e.getMessage());
-        }
+    public String listUI(){
+        userList = userService.findAll();
+
         return "listUI";
     }
     //跳转到新增页面
     public String addUI(){
+        ActionContext.getContext().getContextMap().put("rolelist",roleService.findAll());
         return "addUI";
     }
     //保存新增
@@ -66,22 +74,48 @@ public class UserAction extends BaseAction{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                userService.save(user);
+                userService.saveUserAndRole(user,userRoleIds);
             }
         }
             return "list";
     }
     //跳转到编辑页面
     public String editUI(){
+        ActionContext.getContext().getContextMap().put("rolelist",roleService.findAll());
         if (user != null && user.getId() != null) {
             user = userService.findById(user.getId());
+            List<UserRole> list = userService.getUserRolesById(user.getId());
+
+            if(list != null && list.size()>0){
+                userRoleIds = new String[list.size()];
+                for(int i=0;i<list.size();i++){
+                    userRoleIds[i] = list.get(i).getId().getRole().getRoleId();
+                    }
+            }
         }
         return "editUI";
     }
     //保存编辑
     public String edit(){
-        if(user != null){
-            userService.update(user);
+        try {
+            if(user != null){
+                //处理头像
+                if(headImg != null){
+                    //1、保存头像到upload/user
+                    //获取保存路径的绝对地址
+                    String filePath = ServletActionContext.getServletContext().getRealPath("/upload/user");
+                    String fileName = UUID.randomUUID().toString().replaceAll("-", "") + headImgFileName.substring(headImgFileName.lastIndexOf("."));
+                    //复制文件
+                    FileUtils.copyFile(headImg, new File(filePath, fileName));
+
+                    //2、设置用户头像路径
+                    user.setHeadImg("user/" + fileName);
+                }
+
+                userService.updateUserAndRole(user, userRoleIds);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "list";
     }
@@ -110,11 +144,9 @@ public class UserAction extends BaseAction{
         response.setCharacterEncoding("UTF-8");
         response.setHeader("content-Disposition","attachment;filename="+new String("用户列表.xls".getBytes(),"UTF-8"));
             ServletOutputStream outputStream = response.getOutputStream();
-            try {
-                userService.exportExcel(userService.findAll(),outputStream);
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
+
+            userService.exportExcel(userService.findAll(),outputStream);
+
             if(outputStream != null){
                 outputStream.close();
             }
@@ -211,5 +243,12 @@ public class UserAction extends BaseAction{
 
     public void setUserExcelContentType(String userExcelContentType) {
         this.userExcelContentType = userExcelContentType;
+    }
+    public String[] getUserRoleIds() {
+        return userRoleIds;
+    }
+
+    public void setUserRoleIds(String[] userRoleIds) {
+        this.userRoleIds = userRoleIds;
     }
 }

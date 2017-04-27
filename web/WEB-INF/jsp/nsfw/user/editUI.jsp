@@ -10,7 +10,7 @@
             var account = $("#account").val();
             $.ajax({
                 type:"post",
-                url:"${basePath}nswf/user_doValidate.action",
+                url:"${basePath}nsfw/user_doValidate.action",
                 data:{"user.account":account,"user.id":"${user.id}"},
                 async:false,
                 success:function (msg) {
@@ -45,7 +45,7 @@
     </script>
 </head>
 <body class="rightBody">
-<form id="form" name="form" action="${basePath}nswf/user_edit.action" method="post" enctype="multipart/form-data">
+<form id="form" name="form" action="${basePath}nsfw/user_edit.action" method="post" enctype="multipart/form-data">
     <div class="p_d_1">
         <div class="p_d_1_1">
             <div class="content_info">
@@ -84,7 +84,7 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">角色：</td>
-            <td></td>
+            <td><s:checkboxlist list="#rolelist" listKey="roleId" listValue="name" name="userRoleIds"></s:checkboxlist></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">电子邮箱：</td>

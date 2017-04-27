@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <package name="home" namespace="/sys" extends="struts-default">
+        <action name="home_*" class="cn.qy.home.action.HomeAction" method="{1}">
+            <!--此为相对目录，代表Web下的目录，如果前面不加/,则会查找namespace里面的目录:web/sys/WEB-INF/jsp/home/home.jsp-->
+            <result name="home">/WEB-INF/jsp/home/home.jsp</result>
+        </action>
+    </package>
+</struts>

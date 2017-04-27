@@ -6,13 +6,8 @@ import java.io.Serializable;
  * Created by qy on 2017/3/6.
  */
 public class RolePrivilege implements Serializable {
-    public RolePrivilegeID getId() {
-        return id;
-    }
+    private RolePrivilegeID id;
 
-    public void setId(RolePrivilegeID id) {
-        this.id = id;
-    }
 
     public RolePrivilege(RolePrivilegeID id) {
         this.id = id;
@@ -21,5 +16,10 @@ public class RolePrivilege implements Serializable {
     public RolePrivilege() {
     }
 
-    private RolePrivilegeID id;
+    public RolePrivilegeID getId() {
+        return id;
+    }
+    public void setId(RolePrivilegeID id) {
+        this.id = id;
+    }
 }

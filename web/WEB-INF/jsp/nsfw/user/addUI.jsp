@@ -81,7 +81,8 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">角色：</td>
-            <td></td>
+            <%--如果是map就不需要设间和值，但是list就需要指定,否则直接显示对象--%>
+            <td><s:checkboxlist list="#rolelist" name="userRoleIds" listKey="roleId" listValue="name"></s:checkboxlist> </td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">电子邮箱：</td>

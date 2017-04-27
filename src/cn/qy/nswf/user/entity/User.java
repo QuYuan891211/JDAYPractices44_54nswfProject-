@@ -2,6 +2,7 @@ package cn.qy.nswf.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by qy on 2017/2/27.
@@ -12,8 +13,17 @@ public class User implements Serializable{
     private String account;
     private String name;
     private String password;
-
+    private List<UserRole> userRole;
     private String headImg;
+
+    public List<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(List<UserRole> userRole) {
+        this.userRole = userRole;
+    }
+
     private boolean gender;
     private String state;
     private String mobile;

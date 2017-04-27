@@ -68,7 +68,10 @@
 	<bean name="baseDao" class="cn.qy.core.dao.imp.BaseDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+
+	<bean id="permissionCheck" class="cn.qy.core.permission.PermissionCheck"></bean>
 	<!--<import resource="classpath:Test/Test/conf/test-spring.xml"></import>-->
 	<import resource="classpath:cn/qy/nswf/user/conf/user-spring.xml"></import>
 	<import resource="classpath:cn/qy/nswf/role/conf/role-spring.xml"></import>
+	<import resource="classpath:cn/qy/nswf/info/conf/info-spring.xml"></import>
 </beans>

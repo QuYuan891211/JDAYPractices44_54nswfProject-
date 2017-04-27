@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="cn.qy.nswf.role.entity.Role" table="Role">
-        <id name="roleId" type="java.lang.String">
-            <column name="role_id" length="20"></column>
-            <generator class="uuid"></generator>
-        </id>
-        <property name="name" type="java.lang.String">
-            <column name="name" length="20" not-null="true"></column>
-        </property>
-        <property name="state" type="java.lang.String">
-            <column name="state" not-null="true" length="5"></column>
-        </property>
-        <set name="rolePrivileges" cascade="save-update,delete" inverse="true" lazy="true">
-            <key>
-                <column name="role_id" not-null="true"></column>
-            </key>
-            <one-to-many class="cn.qy.nswf.role.entity.RolePrivilege"></one-to-many>
-        </set>
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-    </class>
+<hibernate-mapping>
+	<class name="cn.qy.nswf.role.entity.Role" table="role">
+		<id name="roleId" type="java.lang.String">
+			<column name="role_id" length="32" />
+			<generator class="uuid" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="name" length="20" not-null="true" />
+		</property>
+		<property name="state" type="java.lang.String">
+			<column name="state" length="1" />
+		</property>
+		<set name="rolePrivileges" inverse="true" lazy="false" cascade="save-update,delete">
+			<key>
+				<column name="role_id"></column>
+			</key>
+			<one-to-many class="cn.qy.nswf.role.entity.RolePrivilege"/>
+		</set>
+	</class>
 </hibernate-mapping>
