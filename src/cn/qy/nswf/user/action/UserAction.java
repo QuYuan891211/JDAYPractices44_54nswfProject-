@@ -49,6 +49,7 @@ public class UserAction extends BaseAction{
     }
     //列表页面
     public String listUI(){
+
         userList = userService.findAll();
 
         return "listUI";

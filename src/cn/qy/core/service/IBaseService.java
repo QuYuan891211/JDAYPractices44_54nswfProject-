@@ -1,5 +1,8 @@
 package cn.qy.core.service;
 
+import cn.qy.core.Utils.QueryHelper;
+import cn.qy.core.Utils.pageUtil.PageResult;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,4 +15,6 @@ public interface IBaseService<T> {
     void delete(Serializable id);
     T findById(Serializable id);
     List<T> findAll();
+    List<T> findAll(QueryHelper queryHelper);
+    PageResult getPageResult(QueryHelper queryHelper, int currentPage, int pageSize);
 }

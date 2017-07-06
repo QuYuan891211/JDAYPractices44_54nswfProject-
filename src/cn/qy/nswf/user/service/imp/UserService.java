@@ -64,6 +64,7 @@ public class UserService extends BaseService<User> implements IUserService {
         return userDao.findUsersByIdAndAccount(id,account);
     }
     //使用Java不定参数
+
     public void saveUserAndRole(User user, String... userRoleIds){
         save(user);
         if(userRoleIds != null){

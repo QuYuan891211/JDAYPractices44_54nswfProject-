@@ -18,7 +18,7 @@
     <include file="cn/qy/login/conf/login-struts.xml"></include>
 <include file="Test/Test/conf/struts.xml"></include>
     <include file="cn/qy/nswf/info/conf/info-struts.xml"></include>
-
+<include file="cn/qy/nswf/complain/conf/complain-struts.xml"></include>
 
     <package name="base-default" extends="struts-default">
         <global-results>

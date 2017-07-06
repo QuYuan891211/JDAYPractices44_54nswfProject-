@@ -27,6 +27,15 @@
         </descriptors>
       </configuration>
     </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="a.xml" value="9b1b3f65-d8f3-4737-91e0-9d18347d8ef5" />
+          <unit-entry name="noname-applicationContext.xml@1815" value="dataSource" />
+        </datasource-map>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -36,11 +45,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jstl-impl" level="project" />
-    <orderEntry type="library" name="hibernate3" level="project" />
     <orderEntry type="library" name="spring3.0" level="project" />
     <orderEntry type="library" name="junit4_lib" level="project" />
     <orderEntry type="library" name="servlet-api" level="project" />
     <orderEntry type="library" name="poi" level="project" />
     <orderEntry type="library" name="struts2.3" level="project" />
+    <orderEntry type="library" name="hibernate3" level="project" />
   </component>
 </module>

@@ -18,6 +18,10 @@
         document.forms[0].action = "${basePath}nsfw/user_importExcel.action";
         document.forms[0].submit();
     }
+    function doSearch(){
+        document.forms[0].action = "${basePath}nsfw/user_list.action";
+        document.forms[0].submit();
+    }
 </script>
 </head>
 <body class="rightBody">

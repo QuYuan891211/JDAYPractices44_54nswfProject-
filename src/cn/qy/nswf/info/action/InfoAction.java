@@ -1,11 +1,14 @@
 package cn.qy.nswf.info.action;
 
 import cn.qy.core.Action.BaseAction;
+import cn.qy.core.Utils.QueryHelper;
 import cn.qy.core.exception.SysException;
 import cn.qy.nswf.info.entity.Info;
 import cn.qy.nswf.info.service.IInfoService;
 import cn.qy.nswf.info.service.imp.InfoService;
 import com.opensymphony.xwork2.ActionContext;
+import freemarker.template.utility.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import javax.annotation.Resource;
@@ -35,7 +38,18 @@ public class InfoAction extends BaseAction {
     public String listUI() throws SysException {
         //put 方法仅用于一次请求，类似servlet里面的HttpServletRequest里面的set
         ActionContext.getContext().getContextMap().put("infoTypeMap", Info.INFO_TYPE_MAP);
-        infoList = infoService.findAll();
+        QueryHelper queryHelper = new QueryHelper(Info.class,"i");
+
+        if(info !=null){
+            if(StringUtils.isNotBlank(info.getTitle())){
+                queryHelper.addCondition("title like ?","%" + info.getTitle() + "%");
+
+            }
+            queryHelper.addOrderByProperty("createTime",QueryHelper.ORDER_BY_DESC);
+        }
+//        infoList = infoService.findAll(queryHelper);
+        //改用分页的方法
+        pageResult = infoService.getPageResult(queryHelper,getCurrentPage(),getPageSize());
         return "listUI";
     }
     //跳转到新增页面

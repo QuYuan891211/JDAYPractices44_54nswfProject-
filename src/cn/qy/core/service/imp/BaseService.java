@@ -1,5 +1,7 @@
 package cn.qy.core.service.imp;
 
+import cn.qy.core.Utils.QueryHelper;
+import cn.qy.core.Utils.pageUtil.PageResult;
 import cn.qy.core.dao.IBaseDao;
 import cn.qy.core.service.IBaseService;
 
@@ -41,5 +43,13 @@ public class BaseService<T> implements IBaseService<T>{
     @Override
     public List findAll() {
         return baseDao.findAll();
+    }
+
+    @Override
+    public List<T> findAll(QueryHelper queryHelper) {
+        return baseDao.findAll(queryHelper);
+    }
+    public PageResult getPageResult(QueryHelper queryHelper, int currentPage, int pageSize){
+        return baseDao.getPageResult(queryHelper,currentPage,pageSize);
     }
 }

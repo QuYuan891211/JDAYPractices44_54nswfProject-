@@ -74,4 +74,5 @@
 	<import resource="classpath:cn/qy/nswf/user/conf/user-spring.xml"></import>
 	<import resource="classpath:cn/qy/nswf/role/conf/role-spring.xml"></import>
 	<import resource="classpath:cn/qy/nswf/info/conf/info-spring.xml"></import>
+	<import resource="classpath:cn/qy/nswf/complain/conf/complain-spring.xml"></import>
 </beans>

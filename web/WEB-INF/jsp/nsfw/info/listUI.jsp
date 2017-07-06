@@ -31,6 +31,12 @@
   		document.forms[0].action = "${basePath}nsfw/info_deleteSelected.action";
   		document.forms[0].submit();
   	}
+  	var list_url = "${basePath}nsfw/info_listUI.action";
+  	//搜索
+    function doSearch(){
+        document.forms[0].action = list_url;
+        document.forms[0].submit();
+    }
   	//异步发布信息,信息的id及将要改成的信息状态
   	function doPublic(infoId, state){
   		//1、更新信息状态
@@ -85,7 +91,7 @@
                             <td width="80" align="center">状态</td>
                             <td width="120" align="center">操作</td>
                         </tr>
-                        <s:iterator value="infoList" status="st">
+                        <s:iterator value="pageResult.items" status="st">
                             <tr <s:if test="#st.odd"> bgcolor="f8f8f8" </s:if> >
                                 <td align="center"><input type="checkbox" name="selectedRow" value="<s:property value='infoId'/>"/></td>
                                 <td align="center"><s:property value="title"/></td>
@@ -111,7 +117,7 @@
                     </table>
                 </div>
             </div>
-        <div class="c_pate" style="margin-top: 5px;">
+<%--        <div class="c_pate" style="margin-top: 5px;">
 		<table width="100%" class="pageDown" border="0" cellspacing="0"
 			cellpadding="0">
 			<tr>
@@ -123,8 +129,8 @@
 			    </td>
 			</tr>
 		</table>	
-        </div>
-
+        </div>--%>
+            <jsp:include page="/common/pageNavigator.jsp"/>
         </div>
     </div>
 </form>

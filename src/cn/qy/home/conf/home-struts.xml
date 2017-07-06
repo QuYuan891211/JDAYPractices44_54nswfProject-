@@ -7,6 +7,15 @@
         <action name="home_*" class="cn.qy.home.action.HomeAction" method="{1}">
             <!--此为相对目录，代表Web下的目录，如果前面不加/,则会查找namespace里面的目录:web/sys/WEB-INF/jsp/home/home.jsp-->
             <result name="home">/WEB-INF/jsp/home/home.jsp</result>
+            <result name="{1}">/WEB-INF/jsp/home/{1}.jsp</result>
+        </action>
+    </package>
+    <package name="homeJson" namespace="/sys" extends="json-default">
+        <action name="home_getUserJson2" class="cn.qy.home.action.HomeAction" method="getUserJson2">
+            <!--此为相对目录，代表Web下的目录，如果前面不加/,则会查找namespace里面的目录:web/sys/WEB-INF/jsp/home/home.jsp-->
+            <result type="json">
+                <param name="root">map</param>
+            </result>
         </action>
     </package>
 </struts>

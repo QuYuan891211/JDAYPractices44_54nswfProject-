@@ -3,8 +3,10 @@
     <CLASSES>
       <root url="jar://D:/CS/JavaWeb/WebLibs/other/jstl-impl.jar!/" />
       <root url="jar://D:/CS/JavaWeb/WebLibs/other/mysql-connector-java-5.1.32-bin.jar!/" />
+      <root url="file://D:/CS/JavaWeb/WebLibs/hibernate3.6" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://D:/CS/JavaWeb/WebLibs/hibernate3.6" recursive="false" />
   </library>
 </component>
