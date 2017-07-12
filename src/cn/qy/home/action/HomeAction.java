@@ -1,12 +1,15 @@
 package cn.qy.home.action;
 
 import cn.qy.core.Utils.QueryHelper;
+import cn.qy.nswf.complain.entity.Complain;
+import cn.qy.nswf.complain.service.IComplainService;
 import cn.qy.nswf.user.entity.User;
 import cn.qy.nswf.user.service.IUserService;
 import cn.qy.nswf.user.service.imp.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
@@ -14,6 +17,8 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +30,14 @@ public class HomeAction extends ActionSupport {
     @Resource
     private IUserService userService;
 
-
+    @Resource
+    private IComplainService complainService;
 
     private Map<String,Object> map;
 
+
+
+    private Complain comp;
 
     public String execute(){
         return "home";
@@ -66,6 +75,23 @@ public class HomeAction extends ActionSupport {
         }
     }
 
+    public void complainAdd(){
+        if(comp != null){
+            comp.setState(Complain.COMPLAIN_STATE_UNDONE);
+            comp.setCompTime(new Timestamp(new Date().getTime()));
+            complainService.save(comp);
+            HttpServletResponse response = ServletActionContext.getResponse();
+            response.setContentType("text/html");
+            try {
+                ServletOutputStream outputStream = response.getOutputStream();
+                outputStream.write("success".getBytes("utf-8"));
+                outputStream.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public String getUserJson2(){
         String dept = ServletActionContext.getRequest().getParameter("dept");
         if(StringUtils.isNotBlank(dept)){
@@ -83,12 +109,22 @@ public class HomeAction extends ActionSupport {
     }
 
 
+
+
     public Map<String, Object> getMap() {
         return map;
     }
 
     public void setMap(Map<String, Object> map) {
         this.map = map;
+    }
+
+    public Complain getComp() {
+        return comp;
+    }
+
+    public void setComp(Complain comp) {
+        this.comp = comp;
     }
 
 }

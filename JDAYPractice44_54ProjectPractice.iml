@@ -51,5 +51,6 @@
     <orderEntry type="library" name="poi" level="project" />
     <orderEntry type="library" name="struts2.3" level="project" />
     <orderEntry type="library" name="hibernate3" level="project" />
+    <orderEntry type="library" name="Quartz" level="project" />
   </component>
 </module>

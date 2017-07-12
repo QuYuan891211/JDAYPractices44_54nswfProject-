@@ -46,6 +46,25 @@
     			$("#toCompName").empty();
     		}
     	}
+    	//提交表单
+        function doSubmit() {
+
+            //1.提交表单
+            $.ajax({
+                url:"${basePath}sys/home_complainAdd.action",
+                data:$("#form").serialize(),
+                type:"post",
+                async:false,
+                success:function (msg) {
+                    if("success" == msg){
+                        alert("成功");
+                        window.opener.parent.location.reload(true);
+                        window.close();
+                    }
+                },
+                error: function () {alert("投诉失败");}
+            })
+        }
     </script>
     
 </head>
@@ -64,7 +83,7 @@
         </tr>
         <tr>
             <td class="tdBg">被投诉人部门：</td>
-            <td><s:select id="toCompDept" name="user.dept" list="#{'':'请选择','DepartmentA':'DepartmentA','DepartmentB':'DepartmentB' }" onchange="doSelectDept()"/></td>
+            <td><s:select id="toCompDept" name="comp.toCompDept" list="#{'':'请选择','DepartmentA':'DepartmentA','DepartmentB':'DepartmentB' }" onchange="doSelectDept()"/></td>
         </tr>
         <tr>
             <td class="tdBg">被投诉人姓名：</td>
@@ -79,13 +98,15 @@
         </tr>
         <tr>
             <td class="tdBg">是否匿名投诉：</td>
-            <td><s:radio name="comp.isNm" list="#{'0':'非匿名投诉','1':'匿名投诉' }" value="0"/></td>
+            <td><s:radio name="comp.isNm" list="#{'false':'非匿名投诉','true':'匿名投诉' }" value="true"/></td>
         </tr>
        
     </table>
-
+    <s:hidden name="comp.compName" value="%{#session.SYS_USER.name}"/>
+    <s:hidden name="comp.compCompany" value="%{#session.SYS_USER.dept}"/>
+    <s:hidden name="comp.compMobile" value="%{#session.SYS_USER.mobile}"/>
     <div class="tc mt20">
-        <input type="button" class="btnB2" value="保存" />
+        <input type="button" class="btnB2" value="保存" onclick="doSubmit()" />
         &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button"  onclick="javascript:window.close()" class="btnB2" value="关闭" />
     </div>
