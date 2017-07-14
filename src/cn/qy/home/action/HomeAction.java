@@ -1,11 +1,15 @@
 package cn.qy.home.action;
 
 import cn.qy.core.Utils.QueryHelper;
+import cn.qy.core.constant.Constant;
 import cn.qy.nswf.complain.entity.Complain;
 import cn.qy.nswf.complain.service.IComplainService;
+import cn.qy.nswf.info.entity.Info;
+import cn.qy.nswf.info.service.IInfoService;
 import cn.qy.nswf.user.entity.User;
 import cn.qy.nswf.user.service.IUserService;
 import cn.qy.nswf.user.service.imp.UserService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
@@ -35,11 +39,30 @@ public class HomeAction extends ActionSupport {
 
     private Map<String,Object> map;
 
-
+    @Resource
+    private IInfoService infoService;
 
     private Complain comp;
 
+    private Info info;
+
+    /**
+     * @return
+     */
     public String execute(){
+        //1.获取消息
+        QueryHelper queryHelper = new QueryHelper(Info.class, "i");
+        queryHelper.addOrderByProperty("createTime",QueryHelper.ORDER_BY_DESC);
+        List<Info> infoList = infoService.getPageResult(queryHelper,1,5).getItems();
+        ActionContext.getContext().getContextMap().put("infoList",infoList);
+
+        //2.获取投诉信息
+
+        QueryHelper queryHelper2 = new QueryHelper(Complain.class, "c");
+        queryHelper2.addOrderByProperty("compTime",QueryHelper.ORDER_BY_DESC);
+        List<Complain> complainList = complainService.getPageResult(queryHelper2,1,5).getItems();
+        ActionContext.getContext().getContextMap().put("complainList",complainList);
+
         return "home";
     }
     //跳转到我要投诉
@@ -92,6 +115,9 @@ public class HomeAction extends ActionSupport {
         }
     }
 
+    /**
+     * @return
+     */
     public String getUserJson2(){
         String dept = ServletActionContext.getRequest().getParameter("dept");
         if(StringUtils.isNotBlank(dept)){
@@ -109,6 +135,21 @@ public class HomeAction extends ActionSupport {
     }
 
 
+    public String infoViewUI(){
+        ActionContext.getContext().getContextMap().put("infoTypeMap",Info.INFO_TYPE_MAP);
+        if(info != null){
+            info  = infoService.findById(info.getInfoId());
+        }
+        return "infoViewUI";
+    }
+
+    public String complainViewUI(){
+        ActionContext.getContext().getContextMap().put("complainStateMap", Complain.COMPLAIN_STATE_MAP);
+        if(comp != null){
+            comp = complainService.findById(comp.getCompId());
+        }
+        return "complainViewUI";
+    }
 
 
     public Map<String, Object> getMap() {
@@ -127,5 +168,12 @@ public class HomeAction extends ActionSupport {
         this.comp = comp;
     }
 
+    public Info getInfo() {
+        return info;
+    }
+
+    public void setInfo(Info info) {
+        this.info = info;
+    }
 }
 

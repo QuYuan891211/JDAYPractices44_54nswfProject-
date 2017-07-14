@@ -8,8 +8,7 @@ import cn.qy.nswf.complain.service.IComplainService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by qy on 2017/6/27.
@@ -47,5 +46,41 @@ public class ComplainService extends BaseService<Complain> implements IComplainS
         }
 
     }
+
+    @Override
+    public List<Map> getAnnualStatisticData(int year) {
+        List<Map> resList = new ArrayList<Map>();
+        List<Object[]> list = complainDao.getAnnualStatisticDataByYear(year);
+        if(list != null && list.size()>0) {
+            //1.是否为当前年
+            boolean isCurYear = (Calendar.getInstance().get(Calendar.YEAR) == year);
+            //2.获取当月
+            int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1; //月份从0开始
+            int temMonth = 0;
+            Map<String, Object> map = null;
+            //格式化数据，每一个map里面包含一个label和一个value
+            for (Object[] objects : list) {
+                temMonth = Integer.valueOf(objects[0] + "");
+                map = new HashMap<String, Object>();
+                map.put("label", temMonth + "月");
+                //3.若为当年：在当月之前，0或者null均为0，若在当月之后，均为null
+                if (isCurYear) {
+                    if (temMonth < curMonth) {
+                        map.put("value", objects[1] == null ? 0 : objects[1]);
+                    } else {
+                        map.put("value", "");
+                    }
+                } else {
+                    //4.若不为当年:0或者null均为0
+                    map.put("value", objects[1] == null ? 0 : objects[1]);
+                }
+                resList.add(map);
+            }
+
+        }
+
+        return resList;
+    }
+
 
 }

@@ -18,6 +18,10 @@
   		document.forms[0].action = "${basePath}nsfw/complain_dealUI.action?complain.compId=" + compId;
   		document.forms[0].submit();
   	}
+    function doAnnualStatistic() {
+  	    document.forms[0].action = "${basePath}nsfw/complain_annualStatisticChartUI.action"
+        document.forms[0].submit();
+  	}
     </script>
 </head>
 <body class="rightBody">

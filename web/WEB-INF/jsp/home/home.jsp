@@ -137,16 +137,30 @@
                 <h1>信息列表</h1>
             </div>
             <table width="98%" border="0" align="center">
-            	
                 <tr>
                     <td height="23">
-                    xx标题
+                        xx标题
                     </td>
                     <td width="150px">xx分类</td>
                     <td width="150px">xx创建人</td>
                     <td width="150px">xx创建时间</td>
                 </tr>
-                
+            	<s:iterator value="#infoList">
+                    <tr>
+                        <td height="23">
+                            <s:url var="infoViewUI" namespace="/sys" action="home_infoViewUI">
+                                <s:param value="info.infoId"><s:property value="infoId"/></s:param>
+                            </s:url>
+                            <s:a href="%{#infoViewUI}" target="_blank">
+                                <s:property value="title"></s:property>
+                            </s:a>
+
+                        </td>
+                        <td width="150px"><s:property value="#infoTypeMap[type]"></s:property> </td>
+                        <td width="150px"><s:property value="creator"></s:property> </td>
+                        <td width="150px"><s:date name="createTime" format="yyyy-MM-dd HH:mm" ></s:date> </td>
+                    </tr>
+                </s:iterator>
             </table>
         </div>
     </div>
@@ -171,7 +185,21 @@
                     <td width="180px">是否匿名投诉</td>
                     <td width="180px">投诉时间</td>
                 </tr>
-                
+                <s:iterator value="#complainList">
+                    <tr>
+                        <td height="23">
+                            <s:url var="complainViewUrl" action="home_complainViewUI" namespace="/sys">
+                                <s:param name="info.infoId"><s:property value="infoId"/></s:param>
+                            </s:url>
+                            <s:a href="%{#complainViewUrl}" target="_blank">
+                                <s:property value="compTitle"></s:property>
+                            </s:a>
+                        </td>
+                        <td width="180px"><s:property value="#complainStateMap[state]"></s:property> </td>
+                        <td width="180px"><s:property value="isNm?'匿名投诉':'非匿名投诉'"></s:property> </td>
+                        <td width="180px"><s:date name="compTime" format="yyyy-MM-dd HH:mm"></s:date> </td>
+                    </tr>
+                </s:iterator>
             </table>
         </div>
 
